@@ -47,17 +47,19 @@ public class Direccion {
     }
      
     
-    public Direccion(com.digis01.SLeonProgramacionNCapas.JPA.Usuario usuarioML){
+    public Direccion(com.digis01.SLeonProgramacionNCapas.JPA.Usuario usuarioJPA){
          
-         com.digis01.SLeonProgramacionNCapas.JPA.Direccion direccionML = usuarioML.Direcciones.get(0);
+         com.digis01.SLeonProgramacionNCapas.JPA.Direccion direccionJPA = usuarioJPA.Direcciones.get(0);
          
-         this.IdDireccion = direccionML.getIdDireccion();
-         this.Calle = direccionML.getCalle();
-         this.NumeroExterior = direccionML.getNumeroExterior();
-         this.NumeroInterior = direccionML.getNumeroInterior();
+         this.IdDireccion = direccionJPA.getIdDireccion();
+         this.Calle = direccionJPA.getCalle();
+         this.NumeroExterior = direccionJPA.getNumeroExterior();
+         this.NumeroInterior = direccionJPA.getNumeroInterior();
          
          this.Colonia = new Colonia();
-        this.Colonia.setIdColonia(direccionML.Colonia.getIdColonia());
+        this.Colonia.setIdColonia(direccionJPA.Colonia.getIdColonia());
+        this.Usuario = new Usuario();
+        this.Usuario.setIdUsuario(usuarioJPA.getIdUsuario());
     
     }
 
@@ -98,6 +100,16 @@ public class Direccion {
 
     public void setNumeroExterior(String NumeroExterior) {
         this.NumeroExterior = NumeroExterior;
+    }
+
+
+    public void setColonia(Colonia Colonia) {
+        this.Colonia = Colonia;
+    }
+
+
+    public void setUsuario(Usuario Usuario) {
+        this.Usuario = Usuario;
     }
 
     

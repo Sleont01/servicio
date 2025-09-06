@@ -8,6 +8,7 @@ import com.digis01.SLeonProgramacionNCapas.JPA.Result;
 
 
 
+
 public interface IRolJPADAO {
     
     Result GetAll();

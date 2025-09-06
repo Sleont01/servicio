@@ -43,6 +43,7 @@ public class Usuario {
     private String ApellidoPaterno;
    
     @Column(name = "fechanacimiento")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date FechaNacimiento;
     
     @Column(name = "apellidomaterno")
@@ -86,6 +87,26 @@ public class Usuario {
     
     public Usuario() {
     }
+
+    public Usuario(int IdUsuario, String Nombre, String ApellidoPaterno, Date FechaNacimiento, String ApellidoMaterno, String Username, String Email, String Password, String Sexo, String Telefono, String Celular, String CURP, Rol Rol, String Imagen, int Status) {
+        this.IdUsuario = IdUsuario;
+        this.Nombre = Nombre;
+        this.ApellidoPaterno = ApellidoPaterno;
+        this.FechaNacimiento = FechaNacimiento;
+        this.ApellidoMaterno = ApellidoMaterno;
+        this.Username = Username;
+        this.Email = Email;
+        this.Password = Password;
+        this.Sexo = Sexo;
+        this.Telefono = Telefono;
+        this.Celular = Celular;
+        this.CURP = CURP;
+        this.Rol = Rol;
+        this.Imagen = Imagen;
+        this.Status = Status;
+    }
+    
+    
     
     
        

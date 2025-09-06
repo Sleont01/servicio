@@ -18,9 +18,12 @@ public interface IUsuarioJPADAO {
       Result ADD(Usuario usuario);
       
       Result Update(Usuario usuario);
+     
       
       Result Delete(int IdUsuario);
       
       Result GetById(int IdUsuario);
+      
+      Result bajalogica(int IdUsuario);
     
 }

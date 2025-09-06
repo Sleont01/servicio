@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -73,20 +74,38 @@ public ResponseEntity add(@RequestBody Usuario usuario) {
     }
 }
 
-@PatchMapping()
-public ResponseEntity update(@RequestBody Usuario usuario) {
-    Result result;
-    try {
-        result = direccionJPADAOImplementation.Update(usuario);
-        result.correct = true;
-        return ResponseEntity.status(200).body(result);
-    } catch (Exception ex) {
-        result = new Result();
-        result.ex = ex;
-        result.errorMessage = ex.getLocalizedMessage();
-        result.correct = false;
-        return ResponseEntity.status(500).body(result);
+//@PatchMapping()
+//public ResponseEntity update(@RequestBody Usuario usuario) {
+//    Result result;
+//    try {
+//        result = direccionJPADAOImplementation.Update(usuario);
+//        result.correct = true;
+//        return ResponseEntity.status(200).body(result);
+//    } catch (Exception ex) {
+//        result = new Result();
+//        result.ex = ex;
+//        result.errorMessage = ex.getLocalizedMessage();
+//        result.correct = false;
+//        return ResponseEntity.status(500).body(result);
+//    }
+    @PutMapping("/{idDireccion}")
+    public ResponseEntity update(@PathVariable int idDireccion, @RequestBody Usuario usuario) {
+        Result result = new Result();
+        try {
+
+            usuario.Direcciones.get(0).setIdDireccion(idDireccion);
+
+           
+            result = direccionJPADAOImplementation.Update(usuario);
+
+            return ResponseEntity.status(200).body(result);
+        } catch (Exception ex) {
+            result.correct = false;
+            result.errorMessage = ex.getLocalizedMessage();
+            result.ex = ex;
+            return ResponseEntity.status(500).body(result);
+        }
     }
-    
+
 } 
-}
+
