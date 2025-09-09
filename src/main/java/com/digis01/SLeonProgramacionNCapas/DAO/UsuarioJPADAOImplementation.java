@@ -95,6 +95,7 @@ public class UsuarioJPADAOImplementation implements IUsuarioJPADAO{
                 usuarioBD.setTelefono(usuario.getTelefono()); 
                 usuarioBD.setCURP(usuario.getCURP());                
                 usuarioBD.Rol.setIdRol(usuario.Rol.getIdRol());
+                usuarioBD.setImagen(usuario.getImagen());
                 entityManager.merge(usuarioBD);
                 result.correct = true;
             } else {
@@ -159,6 +160,7 @@ public Result GetById(int IdUsuario) {
 }
 
     @Override
+    @Transactional
     public Result bajalogica(int IdUsuario) {
          Result result = new Result();
 
