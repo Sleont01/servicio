@@ -1,0 +1,31 @@
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911110913664_Prueba3.txt|0|2025-09-11 11:09:50|Archivo listo para procesar
+log|e1992c936200668e6f1e4fd1f26c85392aa47ea4|carga_20250911111224830_Prueba2.txt|1|2025-09-11 11:12:24|Archivo con errores
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911111254346_Prueba3.txt|0|2025-09-11 11:12:54|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911111445149_Prueba3.txt|0|2025-09-11 11:18:08|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911113800029_Prueba3.txt|0|2025-09-11 11:38:00|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911113826358_Prueba3.txt|0|2025-09-11 11:38:26|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911113948233_Prueba3 - Copy.txt|0|2025-09-11 11:40:09|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911114455200_Prueba3 - Copy.txt|0|2025-09-11 11:45:34|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911115108381_Prueba3 - Copy.txt|0|2025-09-11 11:51:31|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911120331143_Prueba3 - Copy.txt|0|2025-09-11 12:04:05|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911121630727_Prueba3 - Copy.txt|0|2025-09-11 12:18:08|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911122212189_Prueba3.txt|0|2025-09-11 12:22:42|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911122340425_Prueba3.txt|0|2025-09-11 12:24:07|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911122718706_Prueba3.txt|0|2025-09-11 12:27:20|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911122754759_Prueba3.txt|0|2025-09-11 12:27:56|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911122845742_Prueba3.txt|0|2025-09-11 12:28:56|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911123150167_Prueba3.txt|0|2025-09-11 12:31:58|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911123322132_Prueba3.txt|0|2025-09-11 12:33:23|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911123339539_Prueba3.txt|0|2025-09-11 12:33:40|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911124535245_Prueba3 - Copy.txt|0|2025-09-11 12:45:51|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911125859998_Prueba3 - Copy.txt|0|2025-09-11 12:59:12|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911130633646_Prueba3.txt|0|2025-09-11 13:06:55|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911130852744_Prueba3.txt|0|2025-09-11 13:09:03|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911131903702_Prueba3 - Copy.txt|0|2025-09-11 13:19:07|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911132843451_Prueba3.txt|0|2025-09-11 13:29:03|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911133053254_Prueba4.txt|0|2025-09-11 13:31:25|Archivo listo para procesar
+log|9c1bf0b0e927e040b51b69c9835ddab9f6019d7c|carga_20250911144941762_Prueba4.txt|0|2025-09-11 14:50:01|Archivo listo para procesar
+log|a9241b8992fb82af144c2add430e21f78275c835|carga_20250911191037748_Prueba5.txt|0|2025-09-11 19:11:00|Archivo listo para procesar
+log|a9241b8992fb82af144c2add430e21f78275c835|carga_20250911191653274_Prueba5.txt|1|2025-09-11 19:17:23|Archivo repetido
+log|a9241b8992fb82af144c2add430e21f78275c835|carga_20250911192016697_Prueba5.txt|0|2025-09-11 19:20:30|Archivo listo para procesar
+log|a9241b8992fb82af144c2add430e21f78275c835|carga_20250911192930630_Prueba5.txt|0|2025-09-11 19:29:31|Archivo listo para procesar
