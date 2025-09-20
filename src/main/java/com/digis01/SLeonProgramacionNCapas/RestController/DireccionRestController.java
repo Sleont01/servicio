@@ -2,6 +2,8 @@
 package com.digis01.SLeonProgramacionNCapas.RestController;
 
 import com.digis01.SLeonProgramacionNCapas.DAO.DireccionJPADAOImplementation;
+import com.digis01.SLeonProgramacionNCapas.DAO.IRepositoryDireccion;
+import com.digis01.SLeonProgramacionNCapas.JPA.Direccion;
 import com.digis01.SLeonProgramacionNCapas.JPA.Result;
 import com.digis01.SLeonProgramacionNCapas.JPA.Usuario;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -154,6 +157,140 @@ public ResponseEntity add(@RequestBody Usuario usuario) {
             return ResponseEntity.status(500).body(result);
         }
     }
+    
+    @Autowired
+    private IRepositoryDireccion iRepositoryDireccion;
+    
+    @Operation(
+    tags = {"Direcciones"},
+    summary = "Obtener dirección por ID",
+    description = "Devuelve la información de una dirección específica mediante su ID."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Dirección obtenida correctamente"),
+    @ApiResponse(responseCode = "404", description = "Dirección no encontrada"),
+    @ApiResponse(responseCode = "500", description = "Error interno al obtener la dirección")
+})    
+@GetMapping("repository/{idDireccion}")
+public ResponseEntity<Result> getByIddireccion(@PathVariable int idDireccion) {
+    Result result = new Result();
+    try {
+        Optional<Direccion> direccion = iRepositoryDireccion.findById(idDireccion);
+
+        if(direccion.isPresent()){
+            result.correct = true;
+            result.object = direccion.get();
+            return ResponseEntity.status(200).body(result);
+        } else {
+            result.correct = false;
+            result.errorMessage = "Dirección no encontrada";
+            return ResponseEntity.status(404).body(result);
+        }
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+@Operation(
+    tags = {"Direcciones"},
+    summary = "Eliminar una dirección por ID",
+    description = "Elimina una dirección específica del sistema usando su ID"
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Dirección eliminada correctamente"),
+    @ApiResponse(responseCode = "400", description = "Datos inválidos"),
+    @ApiResponse(responseCode = "404", description = "Dirección no encontrada"),
+    @ApiResponse(responseCode = "500", description = "Error interno al eliminar la dirección")
+})
+@DeleteMapping("repository/{idDireccion}")
+public ResponseEntity<Result> deletedireccion(@PathVariable int idDireccion) {
+    Result result = new Result();
+    try {
+        iRepositoryDireccion.deleteById(idDireccion);
+        result.correct = true;
+        result.object = "Dirección eliminada correctamente";
+        return ResponseEntity.status(200).body(result);
+    } catch (org.springframework.dao.EmptyResultDataAccessException e) {
+        result.correct = false;
+        result.errorMessage = "Dirección no encontrada";
+        return ResponseEntity.status(404).body(result);
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+@Operation(
+    tags = {"Direcciones"},
+    summary = "Agregar una nueva dirección",
+    description = "Crea una nueva dirección utilizando los datos enviados en el cuerpo de la solicitud."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "201", description = "Dirección creada correctamente"),
+    @ApiResponse(responseCode = "400", description = "Datos inválidos de la dirección"),
+    @ApiResponse(responseCode = "500", description = "Error interno al agregar la dirección")
+})
+@PostMapping("repository")
+public ResponseEntity<Result> add(@RequestBody Direccion direccion) {
+    Result result = new Result();
+    try {
+        // Guardar la nueva dirección usando JPA
+        Direccion nuevaDireccion = iRepositoryDireccion.save(direccion);
+
+        result.correct = true;
+        result.object = nuevaDireccion;
+
+        return ResponseEntity.status(201).body(result); 
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+@Operation(
+    tags = {"Direcciones"},
+    summary = "Actualizar una dirección por ID",
+    description = "Actualiza la información de una dirección específica usando los datos enviados en el cuerpo de la solicitud."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Dirección actualizada correctamente"),
+    @ApiResponse(responseCode = "400", description = "Datos inválidos de la dirección"),
+    @ApiResponse(responseCode = "404", description = "Dirección no encontrada"),
+    @ApiResponse(responseCode = "500", description = "Error interno al actualizar la dirección")
+})
+@PutMapping("repository/{idDireccion}")
+public ResponseEntity<Result> update(@PathVariable int idDireccion, @RequestBody Direccion direccion) {
+    Result result = new Result();
+    try {
+        // Asegurarnos de que el id coincida
+        direccion.setIdDireccion(idDireccion);
+
+        // Guardar la dirección actualizada
+        Direccion direccionActualizada = iRepositoryDireccion.save(direccion);
+
+        result.correct = true;
+        result.object = direccionActualizada;
+
+        return ResponseEntity.status(200).body(result);
+    } catch (Exception ex) {
+        result.correct = false;
+        result.errorMessage = ex.getLocalizedMessage();
+        result.ex = ex;
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+
+
+
+
 
 } 
 

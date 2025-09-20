@@ -4,6 +4,7 @@
  */
 package com.digis01.SLeonProgramacionNCapas.RestController;
 
+import com.digis01.SLeonProgramacionNCapas.DAO.IRepositoryUsuario;
 import com.digis01.SLeonProgramacionNCapas.DAO.UsuarioJPADAOImplementation;
 import com.digis01.SLeonProgramacionNCapas.JPA.Colonia;
 import com.digis01.SLeonProgramacionNCapas.JPA.Direccion;
@@ -39,6 +40,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import org.apache.poi.ss.usermodel.DataFormatter;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
@@ -379,8 +381,8 @@ public ResponseEntity<?> cargamasiva(@RequestParam("file") MultipartFile file) {
 
    
 
-@PostMapping("/cargamasiva/procesar")
-public ResponseEntity<Result> procesarCargaMasiva(@RequestParam("nombreArchivo") String nombreArchivo) {
+@GetMapping("/cargamasiva/procesar/{sha1Hex}")
+public ResponseEntity<Result> procesarCargaMasiva(@PathVariable("sha1Hex") String sha1Hex) {
     Result result = new Result();
     try {
         // Ruta del log
@@ -394,7 +396,7 @@ public ResponseEntity<Result> procesarCargaMasiva(@RequestParam("nombreArchivo")
 
         // Buscar coincidencia en el log y verificar status = 1 (PROCESAR)
         boolean archivoValido = Files.lines(logPath)
-                .anyMatch(line -> line.contains(nombreArchivo) && line.contains("|1|")); // status.PROCESAR = 1
+                .anyMatch(line -> line.contains(sha1Hex) && line.contains("|1|"));
 
         if (!archivoValido) {
             result.correct = false;
@@ -403,7 +405,7 @@ public ResponseEntity<Result> procesarCargaMasiva(@RequestParam("nombreArchivo")
         }
 
         // Construir ruta completa del archivo en uploads
-        Path archivoPath = Paths.get("uploads").resolve(nombreArchivo);
+        Path archivoPath = Paths.get("uploads").resolve(sha1Hex);
         if (!Files.exists(archivoPath)) {
             result.correct = false;
             result.errorMessage = "Archivo físico no encontrado en uploads.";
@@ -412,7 +414,7 @@ public ResponseEntity<Result> procesarCargaMasiva(@RequestParam("nombreArchivo")
 
         // Obtener extensión
         String extension = "";
-        String originalName = nombreArchivo;
+        String originalName = sha1Hex;
         if (originalName.contains(".")) {
             extension = originalName.substring(originalName.lastIndexOf(".") + 1);
         }
@@ -664,6 +666,169 @@ public ResponseEntity<Result> procesarCargaMasiva(@RequestParam("nombreArchivo")
 
         return errores;
     }
+    
+     @Autowired
+    private IRepositoryUsuario iRepositoryUsuario;
+    
+
+@GetMapping("repository")
+    @Operation(
+            tags = {"Usuarios"},
+            summary = "Obtener todos los usuarios",
+            description = "Método para retornar todos los usuarios"
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Usuarios obtenidos correctamente"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos del usuario"),
+        @ApiResponse(responseCode = "500", description = "Error interno al obtener los usuarios")
+    })
+    public ResponseEntity<Result> GetAllRepository() {
+        Result result = new Result();
+        try {
+            result.correct = true;
+            result.object = iRepositoryUsuario.findAll();
+            return ResponseEntity.status(200).body(result);
+        } catch (Exception ex) {
+            result.correct = false;
+            result.ex = ex;
+            result.errorMessage = ex.getLocalizedMessage();
+            return ResponseEntity.status(500).body(result);
+        }
+        
+    }
+    
+    @PostMapping("repository")
+@Operation(
+        tags = {"Usuarios"},
+        summary = "Agregar un nuevo usuario",
+        description = "Método para agregar un nuevo usuario a la base de datos"
+)
+@ApiResponses(value = {
+        @ApiResponse(responseCode = "201", description = "Usuario agregado correctamente"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos del usuario"),
+        @ApiResponse(responseCode = "500", description = "Error interno al agregar el usuario")
+})
+public ResponseEntity<Result> AddUsuario(@RequestBody Usuario usuario) {
+    Result result = new Result();
+    try {
+        
+        Usuario nuevoUsuario = iRepositoryUsuario.save(usuario);
+
+        result.correct = true;
+        result.object = nuevoUsuario;
+
+      
+        return ResponseEntity.status(201).body(result);
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+@Operation(
+    tags = {"Usuarios"},
+    summary = "Obtener usuario por ID",
+    description = "Devuelve la información de un usuario específico identificado por su ID."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Usuario encontrado correctamente"),
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+    @ApiResponse(responseCode = "500", description = "Error interno al obtener el usuario")
+})
+@GetMapping("repository/{idUsuario}") 
+public ResponseEntity<Result> getByIdUsuario(@PathVariable int idUsuario) {
+    Result result = new Result();  
+    try {
+        
+        Optional<Usuario> usuarioOpt = iRepositoryUsuario.findById(idUsuario);
+
+        if (usuarioOpt.isPresent()) {
+            result.correct = true;
+            result.object = usuarioOpt.get();
+            return ResponseEntity.status(200).body(result);
+        } else {
+            result.correct = false;
+            result.errorMessage = "Usuario no encontrado";
+            return ResponseEntity.status(404).body(result);
+        }
+
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+@Operation(
+    tags = {"Usuarios"},
+    summary = "Actualizar un usuario por ID",
+    description = "Actualiza los datos de un usuario existente utilizando su ID y debe contener los nuevos datos del usuario")
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Usuario actualizado correctamente"),
+    @ApiResponse(responseCode = "400", description = "Datos inválidos del usuario"),
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+    @ApiResponse(responseCode = "500", description = "Error interno al actualizar el usuario")
+})
+@PutMapping("repository/{idUsuario}")
+public ResponseEntity actualizar(@PathVariable int idUsuario, @RequestBody Usuario usuario) {
+    usuario.setIdUsuario(idUsuario); 
+
+
+    Result result;
+    try {
+        // Guardamos directamente el usuario usando save()
+        result = new Result();
+        Usuario actualizado = iRepositoryUsuario.save(usuario);
+        result.correct = true;
+        result.object = actualizado;
+        return ResponseEntity.status(200).body(result); 
+
+    } catch (Exception ex) {
+        result = new Result();
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result); 
+    }
+}
+
+@Operation(
+    tags = {"Usuarios"},
+    summary = "Eliminar un usuario por ID",
+    description = "Elimina un usuario según su ID."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Usuario eliminado correctamente"),
+    @ApiResponse(responseCode = "400", description = "Datos inválidos del usuario"),
+    @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
+    @ApiResponse(responseCode = "500", description = "Error interno al eliminar el usuario")
+})
+@DeleteMapping("repository/{idUsuario}")
+public ResponseEntity deleteusuario(@PathVariable int idUsuario) {
+    Result result;
+    try {
+ 
+        iRepositoryUsuario.deleteById(idUsuario);
+
+        result = new Result();
+        result.correct = true;
+        return ResponseEntity.status(200).body(result);
+
+    } catch (Exception ex) {
+        result = new Result();
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        result.correct = false;
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
+
+
+
 }
 
 

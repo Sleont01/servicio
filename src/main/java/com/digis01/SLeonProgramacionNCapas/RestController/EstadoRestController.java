@@ -5,7 +5,10 @@
 package com.digis01.SLeonProgramacionNCapas.RestController;
 
 import com.digis01.SLeonProgramacionNCapas.DAO.EstadoJPADAOImplementation;
+import com.digis01.SLeonProgramacionNCapas.DAO.IRepositoryEstado;
+import com.digis01.SLeonProgramacionNCapas.DAO.IRepositoryPais;
 import com.digis01.SLeonProgramacionNCapas.JPA.Estado;
+import com.digis01.SLeonProgramacionNCapas.JPA.Pais;
 import com.digis01.SLeonProgramacionNCapas.JPA.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -13,6 +16,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,5 +60,48 @@ public class EstadoRestController {
             return ResponseEntity.status(500).body(result);
         }
     }
+    
+    @Autowired
+    private IRepositoryPais iRepositoryPais;
+    
+     @Autowired
+    private IRepositoryEstado iRepositoryEstado;
+     
+     @Operation(
+    tags = {"Estados"},
+    summary = "Obtener estados por ID de país",
+    description = "Devuelve una lista de estados que pertenecen al país con el ID especificado."
+)
+@ApiResponses(value = {
+    @ApiResponse(responseCode = "200", description = "Estados obtenidos correctamente"),
+    @ApiResponse(responseCode = "404", description = "País no encontrado"),
+    @ApiResponse(responseCode = "500", description = "Error interno al obtener los estados")
+})
+@GetMapping("repository/{idPais}")
+public ResponseEntity<Result> EstadogetById(@PathVariable int idPais) {
+    Result result = new Result();
+    try {
+       
+        Optional<Pais> pais = iRepositoryPais.findById(idPais);
+        if(pais.isPresent()){
+           
+            List<Estado> estados = iRepositoryEstado.findByPaisId(idPais);
+
+            result.correct = true;
+            result.object = estados;
+            return ResponseEntity.status(200).body(result);
+        } else {
+            result.correct = false;
+            result.errorMessage = "País no encontrado";
+            return ResponseEntity.status(404).body(result);
+        }
+    } catch (Exception ex) {
+        result.correct = false;
+        result.ex = ex;
+        result.errorMessage = ex.getLocalizedMessage();
+        return ResponseEntity.status(500).body(result);
+    }
+}
+
     
 }

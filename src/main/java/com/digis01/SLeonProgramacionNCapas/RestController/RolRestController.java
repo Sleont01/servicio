@@ -4,6 +4,7 @@
  */
 package com.digis01.SLeonProgramacionNCapas.RestController;
 
+import com.digis01.SLeonProgramacionNCapas.DAO.IRepositoryRol;
 import com.digis01.SLeonProgramacionNCapas.DAO.RolJPADAOImplementation;
 import com.digis01.SLeonProgramacionNCapas.JPA.Result;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,6 +54,36 @@ public class RolRestController {
             return ResponseEntity.status(500).body(result);
         }
     
+    }
+    
+     @Autowired
+    private IRepositoryRol iRepositoryrol;
+     
+     
+    @GetMapping("repository")
+    @Operation(
+            tags = {"Roles"},
+            summary = "Obtener todos los roles",
+            description = "Devuelve una lista de todos los roles disponibles en el sistema."
+    )
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Roles obtenidos correctamente"),
+        @ApiResponse(responseCode = "400", description = "Datos inválidos del usuario"),
+        @ApiResponse(responseCode = "500", description = "Error interno al obtener los roles")
+    })
+    public ResponseEntity<Result> GetAllRepository() {
+        Result result = new Result();
+        try {
+            result.correct = true;
+            result.object = iRepositoryrol.findAll();
+            return ResponseEntity.status(200).body(result);
+        } catch (Exception ex) {
+            result.correct = false;
+            result.ex = ex;
+            result.errorMessage = ex.getLocalizedMessage();
+            return ResponseEntity.status(500).body(result);
+        }
+        
     }
     
 }
