@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author digis
  */
-public interface IRepositoryColonia extends JpaRepository<Colonia, Integer>{
-    List<Colonia> findByMunicipioId(int idMunicipio);
-    
+public interface IRepositoryColonia extends JpaRepository<Colonia, Integer> {
+     List<Colonia> findByMunicipio_IdMunicipio(int idMunicipio);
 }
+

@@ -671,7 +671,7 @@ public ResponseEntity<Result> procesarCargaMasiva(@PathVariable("sha1Hex") Strin
     private IRepositoryUsuario iRepositoryUsuario;
     
 
-@GetMapping("repository")
+    @GetMapping("repository")
     @Operation(
             tags = {"Usuarios"},
             summary = "Obtener todos los usuarios",
@@ -694,7 +694,7 @@ public ResponseEntity<Result> procesarCargaMasiva(@PathVariable("sha1Hex") Strin
             result.errorMessage = ex.getLocalizedMessage();
             return ResponseEntity.status(500).body(result);
         }
-        
+
     }
     
     @PostMapping("repository")
@@ -772,7 +772,7 @@ public ResponseEntity<Result> getByIdUsuario(@PathVariable int idUsuario) {
     @ApiResponse(responseCode = "404", description = "Usuario no encontrado"),
     @ApiResponse(responseCode = "500", description = "Error interno al actualizar el usuario")
 })
-@PutMapping("repository/{idUsuario}")
+@PutMapping("/repository/{idUsuario}")
 public ResponseEntity actualizar(@PathVariable int idUsuario, @RequestBody Usuario usuario) {
     usuario.setIdUsuario(idUsuario); 
 

@@ -9,10 +9,11 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Pais {
-    @Id
+    
+     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idpais")
-    private int IdPais;
+    private int idPais;
     @Column(name="nombre")
     private String Nombre;
 
@@ -21,12 +22,12 @@ public class Pais {
     }
    
     
-    public int getIdPais() {
-        return IdPais;
+    public int getidPais() {
+        return idPais;
     }
 
-    public void setIdPais(int idPais) {
-        this.IdPais = idPais;
+    public void setidPais(int idPais) {
+        this.idPais = idPais;
     }
 
     public String getNombre() {

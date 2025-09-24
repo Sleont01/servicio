@@ -14,6 +14,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface IRepositoryMunicipio extends JpaRepository<Municipio, Integer>{
     
-    List<Municipio> findByEstadoId(int idEstado);
-    
+        List<Municipio> findByEstado_IdEstado(int idEstado);
+
 }

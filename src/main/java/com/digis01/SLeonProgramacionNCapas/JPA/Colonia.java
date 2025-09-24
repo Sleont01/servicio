@@ -13,46 +13,83 @@ public class Colonia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="idcolonia")
-    private int IdColonia;
+    private int idColonia;
     @Column(name="nombre")
-    private String Nombre;
+    private String nombre;
     @Column(name="codigopostal")
-    private String CodigoPostal;
+    private String codigoPostal;
     @ManyToOne
     @JoinColumn(name = "idmunicipio")
-    public Municipio Municipio;
+    public Municipio municipio;
+
+    public Municipio getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(Municipio municipio) {
+        this.municipio = municipio;
+    }
     
      public Colonia(int IdColonia) {
-        this.IdColonia = IdColonia;
+        this.idColonia = IdColonia;
     }
     
     public Colonia() {
     }
   
-
-   
-
+    
+    
     public int getIdColonia() {
-        return IdColonia;
+        return idColonia;
     }
 
-    public void setIdColonia(int IdColonia) {
-        this.IdColonia = IdColonia;
+    public void setIdColonia(int idColonia) {   
+        this.idColonia = idColonia;
     }
 
     public String getNombre() {
-        return Nombre;
+        return nombre;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
-    
+
     public String getCodigoPostal() {
-        return CodigoPostal;
+        return codigoPostal;
     }
 
-    public void setCodigoPostal(String CodigoPostal) {
-        this.CodigoPostal = CodigoPostal;
+//    public int getIdColonia() {
+//        return IdColonia;
+//    }
+//
+//    public void setIdColonia(int IdColonia) {
+//        this.IdColonia = IdColonia;
+//    }
+//
+//    public String getNombre() {
+//        return Nombre;
+//    }
+//
+//    public void setNombre(String Nombre) {
+//        this.Nombre = Nombre;
+//    }
+//    
+//    public String getCodigoPostal() {
+//        return CodigoPostal;
+//    }
+//
+//    public void setCodigoPostal(String CodigoPostal) {
+//        this.CodigoPostal = CodigoPostal;
+//    }
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public Colonia(int IdColonia, String CodigoPostal, String Nombre, Municipio Municipio) {
+        this.idColonia = IdColonia;
+        this.codigoPostal = CodigoPostal;
+        this.nombre = Nombre;
+        this.municipio = Municipio;
     }
 }

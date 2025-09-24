@@ -76,7 +76,7 @@ private IRepositoryMunicipio iRepositoryMunicipio;
     @ApiResponse(responseCode = "404", description = "Estado no encontrado"),
     @ApiResponse(responseCode = "500", description = "Error interno al obtener los municipios")
 })
-@GetMapping("/{idEstado}")
+@GetMapping("repository/{idEstado}")
 public ResponseEntity<Result> MunicipiogetById(@PathVariable int idEstado) {
     Result result = new Result();
     try {
@@ -84,7 +84,7 @@ public ResponseEntity<Result> MunicipiogetById(@PathVariable int idEstado) {
         Optional<Estado> estado = iRepositoryEstado.findById(idEstado);
         if(estado.isPresent()){
             // Obtener los municipios asociados al estado
-            List<Municipio> municipios = iRepositoryMunicipio.findByEstadoId(idEstado);
+            List<Municipio> municipios = iRepositoryMunicipio.findByEstado_IdEstado(idEstado);
 
             result.correct = true;
             result.object = municipios;

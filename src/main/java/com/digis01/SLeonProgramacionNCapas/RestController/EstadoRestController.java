@@ -82,13 +82,15 @@ public ResponseEntity<Result> EstadogetById(@PathVariable int idPais) {
     Result result = new Result();
     try {
        
-        Optional<Pais> pais = iRepositoryPais.findById(idPais);
-        if(pais.isPresent()){
+        Optional<Estado> estado = iRepositoryEstado.findById(idPais);
+        if(estado.isPresent()){
            
-            List<Estado> estados = iRepositoryEstado.findByPaisId(idPais);
+//            List<Estado> estados = iRepositoryEstado.findByPais_IdPais(idPais);
+
+               // List<Estado> estados = estado.get();
 
             result.correct = true;
-            result.object = estados;
+            //result.object = estados;
             return ResponseEntity.status(200).body(result);
         } else {
             result.correct = false;

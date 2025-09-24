@@ -15,12 +15,12 @@ public class Municipio {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idmunicipio")
-    private int IdMunicipio;
+    private int idMunicipio;
     @Column(name = "nombre")
     private String Nombre;
     @ManyToOne
     @JoinColumn(name="idestado")
-    public Estado Estado;
+    public Estado estado;
 
     
     public Municipio() {
@@ -30,11 +30,11 @@ public class Municipio {
     
 
     public int getIdMunicipio() {
-        return IdMunicipio;
+        return idMunicipio;
     }
 
     public void setIdMunicipio(int idMunicipio) {
-        this.IdMunicipio = idMunicipio;
+        this.idMunicipio = idMunicipio;
     }
 
     public String getNombre() {

@@ -76,7 +76,7 @@ private IRepositoryColonia iRepositoryColonia;
     @ApiResponse(responseCode = "404", description = "Municipio no encontrado"),
     @ApiResponse(responseCode = "500", description = "Error interno al obtener las colonias")
 })
-@GetMapping("/{idMunicipio}")
+@GetMapping("repository/{idMunicipio}")
 public ResponseEntity<Result> ColoniagetById(@PathVariable int idMunicipio) {
     Result result = new Result();
     try {
@@ -84,7 +84,7 @@ public ResponseEntity<Result> ColoniagetById(@PathVariable int idMunicipio) {
         Optional<Municipio> municipio = iRepositoryMunicipio.findById(idMunicipio);
         if(municipio.isPresent()){
             
-            List<Colonia> colonias = iRepositoryColonia.findByMunicipioId(idMunicipio);
+            List<Colonia> colonias = iRepositoryColonia.findByMunicipio_IdMunicipio(idMunicipio);
 
             result.correct = true;
             result.object = colonias;

@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface IRepositoryEstado extends JpaRepository<Estado, Integer>{
     
-    List<Estado> findByPaisId(int idPais);
+    List<Estado> findByPais_IdPais(int idPais);
+
     
 }
