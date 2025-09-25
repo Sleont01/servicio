@@ -776,23 +776,51 @@ public ResponseEntity<Result> getByIdUsuario(@PathVariable int idUsuario) {
 public ResponseEntity actualizar(@PathVariable int idUsuario, @RequestBody Usuario usuario) {
     usuario.setIdUsuario(idUsuario); 
 
+         Result result = new Result();
 
-    Result result;
     try {
-        // Guardamos directamente el usuario usando save()
-        result = new Result();
-        Usuario actualizado = iRepositoryUsuario.save(usuario);
-        result.correct = true;
-        result.object = actualizado;
-        return ResponseEntity.status(200).body(result); 
+        // Buscar el usuario existente
+        Optional<Usuario> usuarioFind = iRepositoryUsuario.findById(idUsuario);
+
+        if (usuarioFind.isPresent()) {
+            // Actualizar el ID por si viene diferente
+            usuario.setIdUsuario(idUsuario);
+
+            // Guardar los cambios
+            Usuario actualizado = iRepositoryUsuario.save(usuario);
+
+            result.correct = true;
+            result.object = actualizado;
+            return ResponseEntity.status(200).body(result);
+        } else {
+            // Usuario no encontrado
+            result.correct = false;
+            result.errorMessage = "Usuario con ID " + idUsuario + " no encontrado";
+            return ResponseEntity.status(404).body(result);
+        }
 
     } catch (Exception ex) {
-        result = new Result();
         result.correct = false;
         result.ex = ex;
         result.errorMessage = ex.getLocalizedMessage();
-        return ResponseEntity.status(500).body(result); 
+        return ResponseEntity.status(500).body(result);
     }
+//    Result result;
+//    try {
+//        // Guardamos directamente el usuario usando save()
+//        result = new Result();
+//        Usuario actualizado = iRepositoryUsuario.save(usuario);
+//        result.correct = true;
+//        result.object = actualizado;
+//        return ResponseEntity.status(200).body(result); 
+//
+//    } catch (Exception ex) {
+//        result = new Result();
+//        result.correct = false;
+//        result.ex = ex;
+//        result.errorMessage = ex.getLocalizedMessage();
+//        return ResponseEntity.status(500).body(result); 
+//    }
 }
 
 @Operation(

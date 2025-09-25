@@ -78,23 +78,19 @@ public class EstadoRestController {
     @ApiResponse(responseCode = "500", description = "Error interno al obtener los estados")
 })
 @GetMapping("repository/{idPais}")
-public ResponseEntity<Result> EstadogetById(@PathVariable int idPais) {
+public ResponseEntity<Result> getEstadosByPais(@PathVariable int idPais) {
     Result result = new Result();
     try {
-       
-        Optional<Estado> estado = iRepositoryEstado.findById(idPais);
-        if(estado.isPresent()){
-           
-//            List<Estado> estados = iRepositoryEstado.findByPais_IdPais(idPais);
+        // Busca los estados por id del país
+        List<Estado> estados = iRepositoryEstado.findByPais_IdPais(idPais);
 
-               // List<Estado> estados = estado.get();
-
+        if (estados != null && !estados.isEmpty()) {
             result.correct = true;
-            //result.object = estados;
+            result.object = estados; // aquí sí devuelves la lista
             return ResponseEntity.status(200).body(result);
         } else {
             result.correct = false;
-            result.errorMessage = "País no encontrado";
+            result.errorMessage = "No se encontraron estados para el país con id " + idPais;
             return ResponseEntity.status(404).body(result);
         }
     } catch (Exception ex) {
@@ -104,6 +100,7 @@ public ResponseEntity<Result> EstadogetById(@PathVariable int idPais) {
         return ResponseEntity.status(500).body(result);
     }
 }
+
 
     
 }
